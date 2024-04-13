@@ -5,7 +5,7 @@ const professionalSchema = new Schema({
     nombreCompleto: {
         type: String,
         required: true,
-        minLength: 10,
+        minLength: 8,
         maxLength: 100,
     },
     foto: {
@@ -17,6 +17,10 @@ const professionalSchema = new Schema({
             },
             message: props => `${props.value} no es una url de imagen valida.`
         },
+    },
+    dni: {
+        type: Number,
+        required: true,
     },
     password: {
         type: String,
@@ -41,12 +45,12 @@ const professionalSchema = new Schema({
         type: Number,
         required: false,
         enum: [1, 2, 3, 4, 5],
-        defaultValue: 0
+        defaultValue: 1
     },
     telefono: {
         type: Number,
         required: true,
-        min: 10, 
+        min: 10,
         max: 20,
     },
     email: {
