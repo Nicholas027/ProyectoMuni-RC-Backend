@@ -54,3 +54,5 @@ const validacionProfesional = [
 ]
 
 export default validacionProfesional
+
+//ver el length del dni, el formato del password, el formato del cv, el formato del telefono
