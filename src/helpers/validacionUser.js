@@ -16,3 +16,4 @@ const validacionUser = [
 export default validacionUser
 
 //decidir un formato para el password, ver el length del email
+//Agregar validaciones en las rutas
