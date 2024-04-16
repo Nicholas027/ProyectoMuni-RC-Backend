@@ -24,7 +24,11 @@ const validacionProfesional = [
         }),
     check("password")
         .notEmpty()
-        .withMessage("El password es un dato obligatorio"),
+        .withMessage("El password es un dato obligatorio")
+        .isLength({ min: 6 })
+        .withMessage("El password debe contener al menos 6 caracteres")
+        .matches(/^(?=.*[A-Z])(?=.*\d).{6,}$/)
+        .withMessage("El password debe contener al menos una letra en mayúsculas, un número y un mínimo de 6 caracteres"),
     check("cv")
         .isString()
         .withMessage("Ingrese un CV válido"),
@@ -54,6 +58,3 @@ const validacionProfesional = [
 ]
 
 export default validacionProfesional
-
-//ver el length del dni, el formato del password, el formato del cv, el formato del telefono
-//Agregar validaciones en las rutas
