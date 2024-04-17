@@ -54,7 +54,7 @@ export const professionalsList = async (req, res) => {
   }
 };
 
-export const profesionalAlone = async (req, res) => {
+export const professionalAlone = async (req, res) => {
   try {
     const profesionalBuscado = await Professional.findById(req.params.id);
     // Responder con el producto
