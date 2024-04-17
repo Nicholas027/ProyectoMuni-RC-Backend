@@ -42,7 +42,7 @@ export const professionalRegister = async (req, res) => {
   }
 };
 
-export const listarProfesionales = async (req, res) => {
+export const professionalsList = async (req, res) => {
   try {
     const profesionales = await Professional.find();
     res.status(200).json(profesionales);
