@@ -48,10 +48,10 @@ const professionalSchema = new Schema({
         defaultValue: 1
     },
     telefono: {
-        type: Number,
+        type: String,
         required: true,
-        min: 10,
-        max: 20,
+        minLength: 10,
+        maxLength: 30,
     },
     email: {
         type: String,
