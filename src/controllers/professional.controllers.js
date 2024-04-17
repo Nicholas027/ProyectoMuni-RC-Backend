@@ -66,7 +66,7 @@ export const professionalAlone = async (req, res) => {
   }
 };
 
-export const editProfessional = async (req,res) =>{
+export const professionalEdit = async (req,res) =>{
     try{
         const buscarProfesional = await Professional.findById(req.params.id)
         if(!buscarProfesional){
