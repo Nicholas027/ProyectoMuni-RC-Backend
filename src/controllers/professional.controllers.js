@@ -3,12 +3,7 @@ import Professional from "../database/models/professional.js";
 
 export const professionalRegister = async (req, res) => {
   try {
-
-    const {
-      dni,
-      password,
-      email
-    } = req.body;
+    const { dni, password, email } = req.body;
 
     const professionalEmailSearch = await Professional.findOne({ email });
     if (professionalEmailSearch) {
@@ -42,7 +37,19 @@ export const professionalRegister = async (req, res) => {
     console.error(error);
     res.status(500).json({
       mensage: "Hubo un error al procesar la solicitud",
-      error: error.message
+      error: error.message,
+    });
+  }
+};
+
+export const listarProfesionales = async (req, res) => {
+  try {
+    const profesionales = await Professional.find();
+    res.status(200).json(profesionales);
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({
+      mensaje: "No se pudo obtener la lista de profesionales.",
     });
   }
 };
