@@ -53,3 +53,16 @@ export const professionalsList = async (req, res) => {
     });
   }
 };
+
+export const profesionalAlone = async (req, res) => {
+  try {
+    const profesionalBuscado = await Professional.findById(req.params.id);
+    // Responder con el producto
+    res.status(200).json(profesionalBuscado);
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({
+      mensaje: "No se encontró el profesional buscado.",
+    });
+  }
+};
