@@ -65,3 +65,23 @@ export const professionalAlone = async (req, res) => {
     });
   }
 };
+
+export const professionalEdit = async (req,res) =>{
+    try{
+        const buscarProfesional = await Professional.findById(req.params.id)
+        if(!buscarProfesional){
+            return res.status(404).json({
+                mensaje: "No se pudo editar el profesional, el id es incorrecto"
+            })
+        }
+        await Professional.findByIdAndUpdate(req.params.id, req.body)
+        res.status(200).json({
+            mensaje: "El profesional fue modificado exitosamente"
+        })
+    } catch(error){
+        console.error(error)
+        res.status(500).json({
+            mensaje: "Ocurrió un error al intentar editar el profesional"
+        })
+    }
+}
