@@ -105,3 +105,23 @@ export const professionalDelete = async (req, res) => {
         })
     }
 }
+
+export const professionalsListCategory = async (req, res) => {
+  try {
+    const categoria = req.params.categoria;
+    const profesionales = await Professional.find({
+      categoria: { $regex: new RegExp('^' + categoria + '$', 'i') }
+    });
+    if(profesionales.length === 0){
+      return res.status(404).json({
+        mensaje: "No se encontraron profesionales pertenecientes a la categoría seleccionada"
+      })
+    }
+    res.status(200).json(profesionales);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      mensaje: "Error del servidor, no se pudo obtener la lista de profesionales.",
+    });
+  }
+};
