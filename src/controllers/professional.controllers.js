@@ -85,3 +85,23 @@ export const professionalEdit = async (req,res) =>{
         })
     }
 }
+
+export const professionalDelete = async (req, res) => {
+    try {
+        const buscarProfesional = await Professional.findById(req.params.id)
+        if (!buscarProfesional) {
+            return res.status(404).json({
+                mensaje: "No se pudo eliminar al profesional, el id es incorrecto"
+            })
+        }
+        await Professional.findByIdAndDelete(req.params.id)
+        res.status(200).json({
+            mensaje: "El profesional fue eliminado correctamente"
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({
+            mensaje: "Ocurrió un error al intentar eliminar el profesional"
+        })
+    }
+}
