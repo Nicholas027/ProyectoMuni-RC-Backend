@@ -27,7 +27,7 @@ const validacionProfesional = [
         .withMessage("El password es un dato obligatorio")
         .isLength({ min: 6 })
         .withMessage("El password debe contener al menos 6 caracteres")
-        .matches(/^(?=.*[A-Z])(?=.*\d).{6,}$/)
+        .matches(/^(?=.*[A-Z])(?=.*\d).{6,20}$/)
         .withMessage("El password debe contener al menos una letra en mayúsculas, un número y un mínimo de 6 caracteres"),
     check("cv")
         .isString()
@@ -35,7 +35,7 @@ const validacionProfesional = [
     check("categoria")
         .notEmpty()
         .withMessage("La categoría e sun dato obligatorio")
-        .isIn(['Carpintero', 'Gasista', 'Cerrajero', 'Mecánico', 'Electricista', 'Albañil', 'Plomero', 'Pintor', 'Herrero', 'Jardinero', 'Otros'])
+        .isIn(['Carpintero', 'Gasista', 'Cerrajero', 'Mecanico', 'Electricista', 'Albañil', 'Plomero', 'Pintor', 'Herrero', 'Jardinero', 'Otros'])
         .withMessage("La categoría debe ser una de las siguientes opciones: 'Carpintero','Gasista','Cerrajero','Mecanico', 'Electricista', 'Albañil', 'Plomero', 'Pintor', 'Herrero', 'Jardinero', 'Otros'"),
     check("descripcion")
         .isLength({ min: 20, max: 1000 })
