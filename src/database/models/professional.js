@@ -63,6 +63,11 @@ const professionalSchema = new Schema({
             },
             message: props => `${props.value} no es un correo electronico válido`
         },
+    },
+    pendiente: {
+        type: Boolean,
+        defaultValue: false,
+        required: false
     }
 })
 
