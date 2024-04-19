@@ -66,7 +66,7 @@ const professionalSchema = new Schema({
     },
     pendiente: {
         type: Boolean,
-        defaultValue: false,
+        defaultValue: true,
         required: false
     }
 })

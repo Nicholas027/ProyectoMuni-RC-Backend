@@ -106,6 +106,65 @@ export const professionalDelete = async (req, res) => {
   }
 }
 
+export const modificarEstadoProfesional = async (req, res) => {
+  const { id } = req.params;
+  const { pendiente } = req.body;
+  try {
+    const profesional = await Professional.findByIdAndUpdate(
+      id,
+      { pendiente },
+      { new: true }
+    );
+
+    if (!profesional) {
+      return res.status(404).json({ message: 'Profesional no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Estado del profesional actualizado exitosamente', profesional });
+  } catch (error) {
+    console.error('Error al actualizar el estado del profesional:', error.message);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+}
+
+export const professionalAdminRegister = async (req, res) => {
+  try {
+    const { dni, password, email } = req.body;
+
+    const professionalEmailSearch = await Professional.findOne({ email });
+    if (professionalEmailSearch) {
+      return res.status(400).json({ message: "Ya existe un profesional con el email proporcionado" });
+    }
+
+    const professionalDniSearch = await Professional.findOne({ dni });
+    if (professionalDniSearch) {
+      return res.status(400).json({ message: "Ya existe un profesional con el DNI proporcionado" });
+    }
+
+    const newProfessional = new Professional(req.body);
+
+    const hashSalts = process.env.HASH_SALTS;
+    const salt = bcrypt.genSaltSync(parseInt(hashSalts));
+    const hashedPassword = bcrypt.hashSync(password, salt);
+    
+    newProfessional.password = hashedPassword;
+    newProfessional.pendiente = false;
+
+    const savedProfessional = await newProfessional.save();
+
+    res.status(201).json({
+      profesional: savedProfessional,
+      mensaje: "El profesional ha sido registrado correctamente",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      mensaje: "Hubo un error al procesar la solicitud",
+      error: error.message,
+    });
+  }
+};
+
 export const professionalsListCategory = async (req, res) => {
   try {
     const categoria = req.params.categoria;
