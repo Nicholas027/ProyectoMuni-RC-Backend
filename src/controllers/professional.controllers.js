@@ -122,6 +122,19 @@ export const professionalsListCategory = async (req, res) => {
     console.error(error);
     res.status(500).json({
       mensaje: "Error del servidor, no se pudo obtener la lista de profesionales.",
+      error: error
     });
   }
 };
+
+export const professionalsCategories = async (req,res) =>{
+  try {
+    const categorias = Professional.schema.path('categoria').enumValues;
+    res.status(200).json(categorias);
+  } catch (error) {
+    console.error(error)
+    res.status(404).json({
+      mensaje: "No se pudieron obtener las categorías"
+    })
+  }
+}
