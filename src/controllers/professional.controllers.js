@@ -105,3 +105,24 @@ export const professionalDelete = async (req, res) => {
         })
     }
 }
+
+export const modificarEstadoProfesional = async (req, res) => {
+  const { id } = req.params;
+  const { pendiente } = req.body;
+  try {
+    const profesional = await Professional.findByIdAndUpdate(
+      id,
+      { pendiente },
+      { new: true }
+    );
+
+    if (!profesional) {
+      return res.status(404).json({ message: 'Profesional no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Estado del profesional actualizado exitosamente', profesional });
+  } catch (error) {
+    console.error('Error al actualizar el estado del profesional:', error.message);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+}
