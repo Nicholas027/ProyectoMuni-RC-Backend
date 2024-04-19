@@ -28,7 +28,7 @@ const validacionProfesional = [
         .isLength({ min: 6 })
         .withMessage("El password debe contener al menos 6 caracteres")
         .matches(/^(?=.*[A-Z])(?=.*\d).{6,20}$/)
-        .withMessage("El password debe contener al menos una letra en mayúsculas, un número y un mínimo de 6 caracteres"),
+        .withMessage("El password debe contener al menos una letra en mayúsculas, un número, un mínimo de 6 caracteres y un máximo de 20 caracteres"),
     check("cv")
         .isString()
         .withMessage("Ingrese un CV válido"),
