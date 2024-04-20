@@ -3,7 +3,7 @@ import { professionalRegister, professionalsList, professionalAlone, professiona
 import validacionProfesional from "../helpers/validacionProfesional.js"
 
 const router = Router();
-router.route("/register").post([validacionProfesional], professionalRegister);
+router.route("/professionals/register").post([validacionProfesional], professionalRegister);
 router.route("/professionals").get(professionalsList);
 router.route("/professionals/categories").get(professionalsCategories)
 router.route("/professionals/:id").get(professionalAlone).put([validacionProfesional], professionalEdit).delete(professionalDelete);
