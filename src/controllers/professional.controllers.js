@@ -196,16 +196,17 @@ export const professionalsCategories = async (req, res) => {
 export const searchProfessionals = async (req, res) => {
   try {
     const { categoria, search } = req.params;
-    //expresion regular para que no se rompa la pagina si en el buscador ingreso un caracter especial
-    const escapeRegExp = (string) => {
-      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    const regex = new RegExp(escapeRegExp(search), 'i');
-    const profesionales = await Professional.find({
-      categoria: { $regex: new RegExp('^' + categoria + '$', 'i') },
-      nombreCompleto: { $regex: regex }
+    const normalizedSearch = search.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const normalizedProfessionals = await Professional.find({
+      categoria: { $regex: new RegExp('^' + categoria + '$', 'i') }
+    }).lean().exec();
+
+    const filteredProfessionals = normalizedProfessionals.filter(profesional => {
+      const normalizedName = profesional.nombreCompleto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return normalizedName.toLowerCase().includes(normalizedSearch.toLowerCase());
     });
-    res.json(profesionales);
+
+    res.json(filteredProfessionals);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error al buscar profesionales.' });
