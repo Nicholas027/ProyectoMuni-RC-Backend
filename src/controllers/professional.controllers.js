@@ -192,3 +192,22 @@ export const professionalsCategories = async (req, res) => {
     })
   }
 }
+
+export const searchProfessionals = async (req, res) => {
+  try {
+    const { categoria, search } = req.params;
+    //expresion regular para que no se rompa la pagina si en el buscador ingreso un caracter especial
+    const escapeRegExp = (string) => {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    const regex = new RegExp(escapeRegExp(search), 'i');
+    const profesionales = await Professional.find({
+      categoria: { $regex: new RegExp('^' + categoria + '$', 'i') },
+      nombreCompleto: { $regex: regex }
+    });
+    res.json(profesionales);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al buscar profesionales.' });
+  }
+};
