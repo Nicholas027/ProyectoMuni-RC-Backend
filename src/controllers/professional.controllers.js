@@ -192,3 +192,23 @@ export const professionalsCategories = async (req, res) => {
     })
   }
 }
+
+export const searchProfessionals = async (req, res) => {
+  try {
+    const { categoria, search } = req.params;
+    const normalizedSearch = search.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const normalizedProfessionals = await Professional.find({
+      categoria: { $regex: new RegExp('^' + categoria + '$', 'i') }
+    }).lean().exec();
+
+    const filteredProfessionals = normalizedProfessionals.filter(profesional => {
+      const normalizedName = profesional.nombreCompleto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return normalizedName.toLowerCase().includes(normalizedSearch.toLowerCase());
+    });
+
+    res.json(filteredProfessionals);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al buscar profesionales.' });
+  }
+};
