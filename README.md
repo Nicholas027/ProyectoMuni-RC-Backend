@@ -1,6 +1,9 @@
 # Red de Trabajo - Concepción Tucumán (Backend) 👷‍♂️👷‍♀️
 ![image](https://github.com/Nicholas027/ProyectoMuni-RC-Frontend/assets/95541436/34817533-3937-494a-bf9d-4a6f8363211d)
 
+Este es el repositorio oficial del backend del proyecto Red de trabajo.
+- Reposotorio de Frontend -> https://github.com/Nicholas027/ProyectoMuni-RC-Frontend
+
 ## ¿Qué es? 🤔
 
 La aplicación web "Red de Trabajo" es una plataforma de búsqueda de empleo impulsada por la comunidad, diseñada específicamente para los residentes de Concepción. Ya seas un recién graduado, un profesional experimentado o alguien en busca de un cambio de carrera, Red de Trabajo conecta el talento local con oportunidades de trabajo dentro de la ciudad.
@@ -39,32 +42,21 @@ Para utilizar este proyecto previamente debe tener configuraciones e instalacion
 
 ## Tecnologías Utilizadas
 
-<ul>
-  <li>
-    <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="JavaScript" width="280" height="48">
-  </li>
-  <li>
-    <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" width="280" height="48">
-  </li>
-  <li>
-    <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" width="280" height="48">
-  </li>
-  <li>
-    <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap" width="280" height="48">
-  </li>
-  <li>
-    <img src="https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=for-the-badge" alt="React" width="280" height="48">
-  </li>
-    <li>
-    <img src="https://img.shields.io/badge/react_router_dom-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white" alt="JavaScript" width="280" height="48">
-  </li>  
-  <li>
-    <img src="https://img.shields.io/badge/ReactHook_Form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white" alt="JavaScript" width="280" height="48">
-  </li>
-  <li>
-    <img src="https://img.shields.io/badge/React_Bootstrap-61DAFB?style=for-the-badge&logo=bootstrap&logoColor=white" alt="JavaScript" width="280" height="48">
-  </li>
-</ul>
+<br/>
+<div>
+      <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="JavaScript" width="280" height="54">
+  <br/>
+      <img src="https://img.shields.io/badge/Node%20JS-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node" width="280" height="54">
+  <br/>
+      <img src="https://img.shields.io/badge/Express%20JS-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" width="280" height="54">
+    <br/>  
+      <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" width="280" height="54">
+     <br/> 
+      <img src="https://img.shields.io/badge/mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white" alt="Mongoose" width="280" height="54">
+   <br/>   
+      <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="vercel" width="280" height="54">
+</div>
+<br/>
 
 ## Contribución
 
