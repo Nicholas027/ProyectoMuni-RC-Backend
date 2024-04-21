@@ -26,6 +26,7 @@ export const professionalRegister = async (req, res) => {
     const hashedPassword = bcrypt.hashSync(password, salt);
 
     newProfessional.pass = hashedPassword;
+    newProfessional.pendiente = true;
 
     const savedProfessional = await newProfessional.save();
 
