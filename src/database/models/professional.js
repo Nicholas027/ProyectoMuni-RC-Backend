@@ -44,9 +44,18 @@ const professionalSchema = new Schema({
     calificacion: {
         type: Number,
         required: false,
-        enum: [1, 2, 3, 4, 5],
-        defaultValue: 1
+        defaultValue: 0,
     },
+    comentarios: [{
+        autor: String,
+        emailAutor: String,
+        calificacion: {
+            type: Number,
+            enum: [1, 2, 3, 4, 5]
+        },
+        tituloComentario: String,
+        descripcion: String
+    }],
     telefono: {
         type: String,
         required: true,
@@ -71,6 +80,22 @@ const professionalSchema = new Schema({
     }
 })
 
+// Middleware para calcular la calificación promedio antes de guardar
+professionalSchema.pre('save', function(next) {
+    // Verificar si hay comentarios
+    if (this.comentarios && this.comentarios.length > 0) {
+        // Calcular la suma de las calificaciones
+        const puntajeCalificacionesTotal = this.comentarios.reduce((sum, comentario) => {
+            return sum + comentario.calificacion;
+        }, 0);
+        
+        // Calcular el promedio
+        this.calificacion = puntajeCalificacionesTotal / this.comentarios.length;
+    }
+    // Continuar con el guardado
+    next();
+});
+
 professionalSchema.pre('save', function(next) {
     const professional = this;
 
@@ -86,6 +111,7 @@ professionalSchema.pre('save', function(next) {
             next();
         });
     });
+
 });
 
 const Professional = mongoose.model('professional', professionalSchema);

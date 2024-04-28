@@ -213,3 +213,36 @@ export const searchProfessionals = async (req, res) => {
     res.status(500).json({ message: 'Error al buscar profesionales.' });
   }
 };
+
+
+export const agregarComentario = async (req, res) => {
+  const { id } = req.params;
+  const { autor, emailAutor, calificacion, tituloComentario, descripcion } = req.body;
+
+  try {
+      // Buscar al profesional por su ID
+      const profesional = await Professional.findById(id);
+
+      if (!profesional) {
+          return res.status(404).json({ mensaje: "Profesional no encontrado" });
+      }
+
+      // Agregar el nuevo comentario al array de comentarios
+      profesional.comentarios.push({ autor, emailAutor, calificacion, tituloComentario, descripcion });
+
+      // Calcular la nueva calificación promedio
+      let totalCalificacion = 0;
+      profesional.comentarios.forEach(comentario => {
+          totalCalificacion += comentario.calificacion;
+      });
+      profesional.calificacion = totalCalificacion / profesional.comentarios.length;
+
+      // Guardar los cambios en la base de datos
+      await profesional.save();
+
+      return res.status(200).json({ mensaje: "Comentario agregado exitosamente", profesional });
+  } catch (error) {
+      console.error("Error al agregar comentario:", error);
+      return res.status(500).json({ mensaje: "Error interno del servidor" });
+  }
+};

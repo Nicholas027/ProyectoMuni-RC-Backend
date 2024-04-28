@@ -40,9 +40,6 @@ const validacionProfesional = [
     check("descripcion")
         .isLength({ min: 20, max: 1000 })
         .withMessage("La descripción debe contener entre 20 y 1000 caracteres"),
-    check("calificacion")
-        .isIn([1, 2, 3, 4, 5])
-        .withMessage("La calificación debe ser un número del 1 al 5"),
     check("telefono")
         .notEmpty()
         .withMessage("El teléfono es un dato obligatorio")
