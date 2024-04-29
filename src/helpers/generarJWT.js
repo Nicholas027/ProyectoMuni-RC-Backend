@@ -3,7 +3,7 @@ import 'dotenv/config';
 
 const generarJWT = async (id, email) => {
     try {
-        const payload = { id, email };
+        const payload = { id, email};
         const token = await jwt.sign(payload, process.env.SECRET_JWT, {
             expiresIn: '3h'
         });

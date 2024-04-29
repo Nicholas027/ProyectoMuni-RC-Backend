@@ -225,6 +225,12 @@ export const login = async (req, res) => {
         mensaje: "Correo o password incorrecto - correo",
       });
     }
+    // Verificar si el profesional está pendiente
+    if (!profesionalBuscado.pendiente) {
+      return res.status(400).json({
+        mensaje: "El perfil del profesional aún no ha sido activado.",
+      });
+    }
     //verificar el password
     const passwordValido = bcrypt.compareSync(
       password,

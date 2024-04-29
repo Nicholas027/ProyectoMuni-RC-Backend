@@ -14,7 +14,7 @@ const validarJWT = (req, res, next) => {
   // si el token existe
   try {
     const payload = jwt.verify(token, process.env.SECRET_JWT);
-    req._id = payload.uid;
+    req._id = payload.id;
     req.email = payload.email;
     next();
   } catch (error) {
