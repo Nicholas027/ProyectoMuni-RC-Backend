@@ -218,31 +218,26 @@ export const searchProfessionals = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    //verificar si el mail ya existe en la BD
     const profesionalBuscado = await Professional.findOne({ email });
     if (!profesionalBuscado) {
       return res.status(400).json({
         mensaje: "Correo o password incorrecto - correo",
       });
     }
-    // Verificar si el profesional está pendiente
     if (!profesionalBuscado.pendiente) {
       return res.status(400).json({
         mensaje: "El perfil del profesional aún no ha sido activado.",
       });
     }
-    //verificar el password
     const passwordValido = bcrypt.compareSync(
       password,
       profesionalBuscado.password
     );
-    //si el password es erroneo
     if (!passwordValido) {
       return res.status(400).json({
         mensaje: "Correo o password incorrecto - password",
       });
     }
-    //generar el token nuevamente
     const token = await generarJWT(profesionalBuscado._id, profesionalBuscado.email);
     res.status(200).json({
       mensaje: "Los datos son correctos",
