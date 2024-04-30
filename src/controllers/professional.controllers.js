@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import Professional from "../database/models/professional.js";
+import generarJWT from "../helpers/generarJWT.js";
 
 export const professionalRegister = async (req, res) => {
   try {
@@ -147,7 +148,7 @@ export const professionalAdminRegister = async (req, res) => {
     const hashSalts = process.env.HASH_SALTS;
     const salt = bcrypt.genSaltSync(parseInt(hashSalts));
     const hashedPassword = bcrypt.hashSync(password, salt);
-    
+
     newProfessional.password = hashedPassword;
     newProfessional.pendiente = false;
 
@@ -213,3 +214,40 @@ export const searchProfessionals = async (req, res) => {
     res.status(500).json({ message: 'Error al buscar profesionales.' });
   }
 };
+
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const profesionalBuscado = await Professional.findOne({ email });
+    if (!profesionalBuscado) {
+      return res.status(400).json({
+        mensaje: "Correo o password incorrecto - correo",
+      });
+    }
+    if (!profesionalBuscado.pendiente) {
+      return res.status(400).json({
+        mensaje: "El perfil del profesional aún no ha sido activado.",
+      });
+    }
+    const passwordValido = bcrypt.compareSync(
+      password,
+      profesionalBuscado.password
+    );
+    if (!passwordValido) {
+      return res.status(400).json({
+        mensaje: "Correo o password incorrecto - password",
+      });
+    }
+    const token = await generarJWT(profesionalBuscado._id, profesionalBuscado.email);
+    res.status(200).json({
+      mensaje: "Los datos son correctos",
+      email: email,
+      token,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      mensaje: "Error al intentar loguear un profesional",
+    });
+  }
+}
