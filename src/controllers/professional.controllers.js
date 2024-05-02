@@ -2,7 +2,8 @@ import bcrypt from "bcrypt";
 import Professional from "../database/models/professional.js";
 import generarJWT from "../helpers/generarJWT.js";
 import cloudinary from '../utils/cloudinary.js';
-import fs from 'fs';
+import fs from 'fs/promises';
+import path from 'path';
 
 export const professionalRegister = async (req, res) => {
   try {
@@ -259,15 +260,15 @@ export const saveCV = async (req, res) => {
     const { id } = req.params;
     const { buffer, originalname } = req.file;
 
-    const path = `./tmp/${originalname}`;
-    await fs.promises.writeFile(path, buffer);
+    const filePath = path.join(process.cwd(), 'tmp', originalname);
+    await fs.writeFile(filePath, buffer);
 
     const uploadOptions = {
       resource_type: 'auto',
       folder: `cvs/${id}`,
     };
 
-    const result = await cloudinary.uploader.upload(path, uploadOptions);
+    const result = await cloudinary.uploader.upload(filePath, uploadOptions);
 
     const profesional = await Professional.findById(id);
     if (!profesional) {
@@ -277,7 +278,7 @@ export const saveCV = async (req, res) => {
     profesional.cv = result.secure_url;
     await profesional.save();
 
-    await fs.promises.unlink(path);
+    await fs.unlink(filePath);
 
     res.status(200).json({ message: 'CV actualizado correctamente' });
   } catch (error) {
@@ -291,15 +292,15 @@ export const uploadProfilePhoto = async (req, res) => {
     const { id } = req.params;
     const { buffer, originalname } = req.file;
 
-    const path = `./tmp/${originalname}`;
-    await fs.promises.writeFile(path, buffer);
+    const filePath = path.join(process.cwd(), 'tmp', originalname);
+    await fs.writeFile(filePath, buffer);
 
     const uploadOptions = {
       resource_type: 'auto',
       folder: `profile_photos/${id}`,
     };
 
-    const result = await cloudinary.uploader.upload(path, uploadOptions);
+    const result = await cloudinary.uploader.upload(filePath, uploadOptions);
 
     const profesional = await Professional.findById(id);
     if (!profesional) {
@@ -309,11 +310,12 @@ export const uploadProfilePhoto = async (req, res) => {
     profesional.foto = result.secure_url;
     await profesional.save();
 
-    await fs.promises.unlink(path);
+    await fs.unlink(filePath);
 
     res.status(200).json({ message: 'Foto de perfil actualizada correctamente' });
   } catch (error) {
     console.error('Error al actualizar la foto de perfil:', error);
     res.status(500).json({ error: 'Error al actualizar la foto de perfil' });
   }
-}
+};
+
