@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import userRoutes from './src/routes/user.routes.js';
 import professionalRoutes from './src/routes/professional.routes.js';
 import './src/database/database.js';
+import bodyParser from 'body-parser'
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: false }))
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, '/public')));

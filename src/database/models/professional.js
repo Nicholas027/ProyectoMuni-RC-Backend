@@ -11,12 +11,7 @@ const professionalSchema = new Schema({
     foto: {
         type: String,
         required: false,
-        validate: {
-            validator: function(valor){
-                return /(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/i.test(valor)
-            },
-            message: props => `${props.value} no es una url de imagen valida.`
-        },
+        default: "https://res.cloudinary.com/dcq6pjpii/image/upload/v1714589212/xdsumzlalq9u3acuvcrw.png",
     },
     dni: {
         type: Number,
@@ -29,6 +24,7 @@ const professionalSchema = new Schema({
     cv: {
         type: String,
         required: false,
+        default: "https://res.cloudinary.com/dcq6pjpii/image/upload/v1714656241/vfyxlsitxpiu7ge4idmt.jpg"
     },
     categoria:{
         type: String,
@@ -45,7 +41,7 @@ const professionalSchema = new Schema({
         type: Number,
         required: false,
         enum: [1, 2, 3, 4, 5],
-        defaultValue: 1
+        default: 1
     },
     telefono: {
         type: String,
@@ -66,7 +62,7 @@ const professionalSchema = new Schema({
     },
     pendiente: {
         type: Boolean,
-        defaultValue: true,
+        default: true,
         required: false
     }
 })
