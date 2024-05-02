@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import Professional from "../database/models/professional.js";
 import generarJWT from "../helpers/generarJWT.js";
+import cloudinary from '../utils/cloudinary.js';
+import fs from 'fs';
 
 export const professionalRegister = async (req, res) => {
   try {
@@ -249,5 +251,69 @@ export const login = async (req, res) => {
     res.status(500).json({
       mensaje: "Error al intentar loguear un profesional",
     });
+  }
+}
+
+export const saveCV = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { buffer, originalname } = req.file;
+
+    const path = `./tmp/${originalname}`;
+    await fs.promises.writeFile(path, buffer);
+
+    const uploadOptions = {
+      resource_type: 'auto',
+      folder: `cvs/${id}`,
+    };
+
+    const result = await cloudinary.uploader.upload(path, uploadOptions);
+
+    const profesional = await Professional.findById(id);
+    if (!profesional) {
+      return res.status(404).json({ error: 'Profesional no encontrado' });
+    }
+
+    profesional.cv = result.secure_url;
+    await profesional.save();
+
+    await fs.promises.unlink(path);
+
+    res.status(200).json({ message: 'CV actualizado correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar CV:', error);
+    res.status(500).json({ error: 'Error al actualizar CV' });
+  }
+};
+
+export const uploadProfilePhoto = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { buffer, originalname } = req.file;
+
+    const path = `./tmp/${originalname}`;
+    await fs.promises.writeFile(path, buffer);
+
+    const uploadOptions = {
+      resource_type: 'auto',
+      folder: `profile_photos/${id}`,
+    };
+
+    const result = await cloudinary.uploader.upload(path, uploadOptions);
+
+    const profesional = await Professional.findById(id);
+    if (!profesional) {
+      return res.status(404).json({ error: 'Profesional no encontrado' });
+    }
+
+    profesional.foto = result.secure_url;
+    await profesional.save();
+
+    await fs.promises.unlink(path);
+
+    res.status(200).json({ message: 'Foto de perfil actualizada correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar la foto de perfil:', error);
+    res.status(500).json({ error: 'Error al actualizar la foto de perfil' });
   }
 }
