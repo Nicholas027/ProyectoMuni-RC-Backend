@@ -43,14 +43,34 @@ const professionalSchema = new Schema({
         defaultValue: 0,
     },
     comentarios: [{
-        autor: String,
-        emailAutor: String,
+        autor: {
+            type: String,
+            required: true,
+            minLength: 3,
+            maxLength: 30,
+        },
+        emailAutor: {
+            type: String,
+            required: true,
+            match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        },
         calificacion: {
             type: Number,
+            required: true,
             enum: [1, 2, 3, 4, 5]
         },
-        tituloComentario: String,
-        descripcion: String
+        tituloComentario: {
+            type: String,
+            required: true,
+            minLength: 5,
+            maxLength: 25,
+        },
+        descripcion: {
+            type: String,
+            required: true,
+            minLength: 10,
+            maxLength: 150,
+        },
     }],
     telefono: {
         type: String,
