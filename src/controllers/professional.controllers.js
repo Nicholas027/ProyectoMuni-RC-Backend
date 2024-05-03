@@ -1,5 +1,9 @@
 import bcrypt from "bcrypt";
 import Professional from "../database/models/professional.js";
+import generarJWT from "../helpers/generarJWT.js";
+import cloudinary from '../utils/cloudinary.js';
+import fs from 'fs/promises';
+import path from 'path';
 
 export const professionalRegister = async (req, res) => {
   try {
@@ -147,7 +151,7 @@ export const professionalAdminRegister = async (req, res) => {
     const hashSalts = process.env.HASH_SALTS;
     const salt = bcrypt.genSaltSync(parseInt(hashSalts));
     const hashedPassword = bcrypt.hashSync(password, salt);
-    
+
     newProfessional.password = hashedPassword;
     newProfessional.pendiente = false;
 
@@ -214,7 +218,6 @@ export const searchProfessionals = async (req, res) => {
   }
 };
 
-
 export const agregarComentario = async (req, res) => {
   const { id } = req.params;
   const { autor, emailAutor, calificacion, tituloComentario, descripcion } = req.body;
@@ -244,5 +247,106 @@ export const agregarComentario = async (req, res) => {
   } catch (error) {
       console.error("Error al agregar comentario:", error);
       return res.status(500).json({ mensaje: "Error interno del servidor" });
+  }
+};
+
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const profesionalBuscado = await Professional.findOne({ email });
+    if (!profesionalBuscado) {
+      return res.status(400).json({
+        mensaje: "Correo o password incorrecto - correo",
+      });
+    }
+    if (!profesionalBuscado.pendiente) {
+      return res.status(400).json({
+        mensaje: "El perfil del profesional aún no ha sido activado.",
+      });
+    }
+    const passwordValido = bcrypt.compareSync(
+      password,
+      profesionalBuscado.password
+    );
+    if (!passwordValido) {
+      return res.status(400).json({
+        mensaje: "Correo o password incorrecto - password",
+      });
+    }
+    const token = await generarJWT(profesionalBuscado._id, profesionalBuscado.email);
+    res.status(200).json({
+      mensaje: "Los datos son correctos",
+      email: email,
+      token,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      mensaje: "Error al intentar loguear un profesional",
+    });
+  }
+}
+
+export const saveCV = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { buffer, originalname } = req.file;
+
+    const filePath = path.join(process.cwd(), 'tmp', originalname);
+    await fs.writeFile(filePath, buffer);
+
+    const uploadOptions = {
+      resource_type: 'auto',
+      folder: `cvs/${id}`,
+    };
+
+    const result = await cloudinary.uploader.upload(filePath, uploadOptions);
+
+    const profesional = await Professional.findById(id);
+    if (!profesional) {
+      return res.status(404).json({ error: 'Profesional no encontrado' });
+    }
+
+    profesional.cv = result.secure_url;
+    await profesional.save();
+
+    await fs.unlink(filePath);
+
+    res.status(200).json({ message: 'CV actualizado correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar CV:', error);
+    res.status(500).json({ error: 'Error al actualizar CV' });
+  }
+};
+
+export const uploadProfilePhoto = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { buffer, originalname } = req.file;
+
+    const filePath = path.join(process.cwd(), 'tmp', originalname);
+    await fs.writeFile(filePath, buffer);
+
+    const uploadOptions = {
+      resource_type: 'auto',
+      folder: `profile_photos/${id}`,
+    };
+
+    const result = await cloudinary.uploader.upload(filePath, uploadOptions);
+
+    const profesional = await Professional.findById(id);
+    if (!profesional) {
+      return res.status(404).json({ error: 'Profesional no encontrado' });
+    }
+
+    profesional.foto = result.secure_url;
+    await profesional.save();
+
+    await fs.unlink(filePath);
+
+    res.status(200).json({ message: 'Foto de perfil actualizada correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar la foto de perfil:', error);
+    res.status(500).json({ error: 'Error al actualizar la foto de perfil' });
   }
 };

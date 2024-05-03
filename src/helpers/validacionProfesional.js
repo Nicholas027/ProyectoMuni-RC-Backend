@@ -7,9 +7,6 @@ const validacionProfesional = [
         .withMessage("El nombre del profesional es un dato obligatorio")
         .isLength({ min: 8, max: 100 })
         .withMessage("El nombre del profesional debe contener entre 8 y 100 caracteres"),
-    check("foto")
-        .matches(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/)
-        .withMessage("La foto debe tener una URL válida"),
     check("dni")
         .notEmpty()
         .withMessage("El DNI es un dato obligatorio")
@@ -29,9 +26,6 @@ const validacionProfesional = [
         .withMessage("El password debe contener al menos 6 caracteres")
         .matches(/^(?=.*[A-Z])(?=.*\d).{6,20}$/)
         .withMessage("El password debe contener al menos una letra en mayúsculas, un número, un mínimo de 6 caracteres y un máximo de 20 caracteres"),
-    check("cv")
-        .isString()
-        .withMessage("Ingrese un CV válido"),
     check("categoria")
         .notEmpty()
         .withMessage("La categoría e sun dato obligatorio")
