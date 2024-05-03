@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { professionalRegister, professionalsList, professionalAlone, professionalEdit, professionalDelete, modificarEstadoProfesional, professionalAdminRegister, professionalsListCategory, professionalsCategories, searchProfessionals, login, saveCV, uploadProfilePhoto, agregarComentario } from "../controllers/professional.controllers.js";
+import { professionalRegister, professionalsList, professionalAlone, professionalEdit, professionalDelete, modificarEstadoProfesional, professionalAdminRegister, professionalsListCategory, professionalsCategories, searchProfessionals, login, saveCV, uploadProfilePhoto, agregarComentario, searchProfessionalsIndex } from "../controllers/professional.controllers.js";
 import validacionProfesional from "../helpers/validacionProfesional.js"
 import multer from 'multer';
 
@@ -18,7 +18,7 @@ router.route("/professionals/category/:categoria/:search").get(searchProfessiona
 router.route("/").post(login);
 router.route("/professionals/:id/cv").post(upload.single("cv"), saveCV);
 router.route("/professionals/:id/photo").post(upload.single("foto"), uploadProfilePhoto);
-router.route("/professionals/:id/comments").post(agregarComentario)
-
+router.route("/professionals/:id/comments").post(agregarComentario);
+router.route("/professionals/buscador/:search").get(searchProfessionalsIndex);
 
 export default router;

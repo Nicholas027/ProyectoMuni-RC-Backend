@@ -350,3 +350,23 @@ export const uploadProfilePhoto = async (req, res) => {
     res.status(500).json({ error: 'Error al actualizar la foto de perfil' });
   }
 };
+
+export const searchProfessionalsIndex = async (req, res) => {
+  try {
+    const { search } = req.params;
+    const normalizedSearch = search.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const normalizedProfessionals = await Professional.find({
+      nombreCompleto: {$regex: new RegExp(normalizedSearch, 'i') }
+    })
+    const filteredProfessionals = normalizedProfessionals.filter(
+      profesional => {
+        const normalizedName = profesional.nombreCompleto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        return normalizedName.toLowerCase().includes(normalizedSearch.toLowerCase());
+      }
+    )
+    res.json(filteredProfessionals);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al buscar profesionales.' });
+  }
+};
