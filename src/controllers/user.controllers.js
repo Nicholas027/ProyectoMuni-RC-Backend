@@ -48,6 +48,26 @@ export const usersList = async (req, res) => {
   }
 };
 
+export const userDelete = async (req, res) => {
+  try {
+    const buscarUsuario = await User.findById(req.params.id)
+    if (!buscarUsuario) {
+      return res.status(404).json({
+        mensaje: "No se pudo eliminar al usuario, el id es incorrecto"
+      })
+    }
+    await User.findByIdAndDelete(req.params.id)
+    res.status(200).json({
+      mensaje: "El usuario fue eliminado correctamente"
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      mensaje: "Ocurrió un error al intentar eliminar el usuario"
+    })
+  }
+}
+
 // export const userSignIn = async (req, res) => {
 //   try {
 //     const { password, email } = req.body;
@@ -104,10 +124,12 @@ export const userSignIn = async (req, res) => {
         .json({ mensaje: "Email o password incorrecto - password" });
     }
     //generar el token
-    // const token = await generarJWT(usuarioBuscado._id, usuarioBuscado.email);
+    const token = await generarJWT(usuarioBuscado._id, usuarioBuscado.email);
     res.status(200).json({
       message: "El usuario existe",
-      email: usuarioBuscado.email
+      email: usuarioBuscado.email,
+      nombre: usuarioBuscado.nombre,
+      token
     });
   } catch (error) {
     console.error(error);
