@@ -68,41 +68,6 @@ export const userDelete = async (req, res) => {
   }
 }
 
-// export const userSignIn = async (req, res) => {
-//   try {
-//     const { password, email } = req.body;
-
-//     const usuarioBuscado = await User.findOne({ email });
-//     if (!usuarioBuscado) {
-//       return res
-//         .status(400)
-//         .json({ message: "Correo o password incorrecto - correo" });
-//     }
-
-//     const passwordValido = bcrypt.compareSync(
-//       (password),
-//       (usuarioBuscado.password)
-//     );
-
-//     if (!passwordValido) {
-//       return res
-//         .status(400)
-//         .json({ mensaje: "Correo o password incorrecto - password" });
-//     }
-//     //generar el token
-//     // const token = await generarJWT(usuarioBuscado._id, usuarioBuscado.email);
-//     res.status(200).json({
-//       message: "El usuario existe",
-//       email: usuarioBuscado.email,
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({
-//       mensaje: "Error al intentar loguear un profesional",
-//     });
-//   }
-// };
-
 export const userSignIn = async (req, res) => {
   try {
     const { email, password } = req.body;
