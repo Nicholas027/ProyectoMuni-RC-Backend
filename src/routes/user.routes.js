@@ -5,7 +5,7 @@ import validacionUser from "../helpers/validacionUser.js";
 const routerUser = Router();
 
 routerUser.route("/users/register").post([validacionUser], userRegister);
-routerUser.route("/users").ger(usersList);
+routerUser.route("/users").get(usersList);
 
 
 export default routerUser;
