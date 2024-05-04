@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import User from "../database/models/user.js";
+import generarJWT from "../helpers/generarJWT.js";
 
 export const userRegister = async (req, res) => {
   try {
@@ -31,6 +32,18 @@ export const userRegister = async (req, res) => {
     res.status(500).json({
       mensage: "Hubo un error al procesar la solicitud",
       error: error.message,
+    });
+  }
+};
+
+export const usersList = async (req, res) => {
+  try {
+    const usuarios = await User.find();
+    res.status(200).json(usuarios);
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({
+      mensaje: "No se pudo obtener la lista de usuarios.",
     });
   }
 };
