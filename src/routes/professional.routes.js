@@ -16,10 +16,10 @@ router.route("/professionals/:id/state").put(modificarEstadoProfesional);
 router.route("/professionals/registerAdmin").post(professionalAdminRegister);
 router.route("/professionals/category/:categoria").get(professionalsListCategory);
 router.route("/professionals/category/:categoria/:search").get(searchProfessionals);
-router.route("/").post(login);
 router.route("/professionals/:id/cv").post(upload.single("cv"), saveCV);
 router.route("/professionals/:id/photo").post(upload.single("foto"), uploadProfilePhoto);
-router.route("/professionals/:id/comments").post(agregarComentario)
+router.route("/professionals/:id/comments").post(agregarComentario);
+router.route("/professionals/login").post(login);
 
 
 export default router;
