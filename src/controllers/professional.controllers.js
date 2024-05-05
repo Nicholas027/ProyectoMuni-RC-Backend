@@ -79,9 +79,9 @@ export const professionalEdit = async (req, res) => {
         mensaje: "No se pudo editar el profesional, el id es incorrecto"
       })
     }
-    await Professional.findByIdAndUpdate(req.params.id, req.body)
+    const professional = await Professional.findByIdAndUpdate(req.params.id, req.body)
     res.status(200).json({
-      mensaje: "El profesional fue modificado exitosamente"
+      mensaje: "El profesional fue modificado exitosamente", professional: professional
     })
   } catch (error) {
     console.error(error)
