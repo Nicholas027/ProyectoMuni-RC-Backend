@@ -91,6 +91,7 @@ export const userSignIn = async (req, res) => {
     //generar el token
     const token = await generarJWT(usuarioBuscado._id, usuarioBuscado.email);
     res.status(200).json({
+      status: true,
       message: "El usuario existe",
       email: usuarioBuscado.email,
       nombre: usuarioBuscado.nombre,
