@@ -259,7 +259,7 @@ export const login = async (req, res) => {
         mensaje: "Correo o password incorrecto - correo",
       });
     }
-    if (!profesionalBuscado.pendiente) {
+    if (profesionalBuscado.pendiente) {
       return res.status(400).json({
         mensaje: "El perfil del profesional aún no ha sido activado.",
       });
@@ -275,8 +275,10 @@ export const login = async (req, res) => {
     }
     const token = await generarJWT(profesionalBuscado._id, profesionalBuscado.email);
     res.status(200).json({
+      status: true,
       mensaje: "Los datos son correctos",
-      email: email,
+      email: profesionalBuscado.email,
+      nombre: profesionalBuscado.nombreCompleto,
       token,
     });
   } catch (error) {
