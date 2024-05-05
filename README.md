@@ -1,12 +1,12 @@
-# Red de Trabajo - Concepción Tucumán (Backend) 👷‍♂️👷‍♀️
+# Portal de Oficios Concepción - Concepción Tucumán (Backend) 👷‍♂️👷‍♀️
 ![image](https://github.com/Nicholas027/ProyectoMuni-RC-Frontend/assets/95541436/34817533-3937-494a-bf9d-4a6f8363211d)
 
-Este es el repositorio oficial del backend del proyecto Red de trabajo.
+Este es el repositorio oficial del backend del proyecto Portal de Oficios Concepción.
 - Reposotorio de Frontend -> https://github.com/Nicholas027/ProyectoMuni-RC-Frontend
 
 ## ¿Qué es? 🤔
 
-La aplicación web "Red de Trabajo" es una plataforma de búsqueda de empleo impulsada por la comunidad, diseñada específicamente para los residentes de Concepción. Ya seas un recién graduado, un profesional experimentado o alguien en busca de un cambio de carrera, Red de Trabajo conecta el talento local con oportunidades de trabajo dentro de la ciudad.
+La aplicación web "Portal de Oficios Concepción" es una plataforma de búsqueda de empleo impulsada por la comunidad, diseñada específicamente para los residentes de Concepción. Ya seas un recién graduado, un profesional experimentado o alguien en busca de un cambio de carrera, Portal de Oficios Concepción conecta el talento local con oportunidades de trabajo dentro de la ciudad.
 
 ## Características 🌍
 
@@ -14,17 +14,17 @@ La aplicación web "Red de Trabajo" es una plataforma de búsqueda de empleo imp
 - **Busqueda laboral**: Los usuarios pueden buscar un profesional especifico o conocer nuevos profesionales según la clase de oficio de trabajador que requiere, pudiendolo contactar de forma rápida y directa.
 - **Categoría de profesional**: Según el tipo de profesional que requieran, los usuarios pueden elegir entre un amplio perfil de categorias de profesional, entre ellos: Carpinteros, Gasistas, Mecánicos, Plomeros y mucho más.
                       
-## ¿Por qué Red de Trabajo? 
+## ¿Por qué Portal de Oficios Concepción? 
 
-- **Enfoque Local**: A diferencia de los portales de empleo genéricos, Red de Trabajo se adapta a las necesidades únicas de Concepción.
+- **Enfoque Local**: A diferencia de los portales de empleo genéricos, Portal de Oficios Concepción se adapta a las necesidades únicas de Concepción.
 
-- **Empoderando a los Residentes**: Red de Trabajo permite a los residentes encontrar empleo significativo dentro de su propia comunidad, fomentando el crecimiento económico y la retención de talento.
+- **Empoderando a los Residentes**: Portal de Oficios Concepción permite a los residentes encontrar empleo significativo dentro de su propia comunidad, fomentando el crecimiento económico y la retención de talento.
 
-- **Búsqueda de Empleo Simplificada**: No más búsqueda entre listados irrelevantes. Red de Trabajo agiliza el proceso de búsqueda de empleo, beneficiando tanto a los buscadores de empleo como a los empleadores.
+- **Búsqueda de Empleo Simplificada**: No más búsqueda entre listados irrelevantes. Portal de Oficios Concepción agiliza el proceso de búsqueda de empleo, beneficiando tanto a los buscadores de empleo como a los empleadores.
 
 ## ¡Comienza Ahora! 🏙
 
-Visita Red de Trabajo hoy mismo y da el siguiente paso en tu carrera profesional. 🚀
+Visita Portal de Oficios Concepción hoy mismo y da el siguiente paso en tu carrera profesional. 🚀
 
 ## Pre-requisitos 📋
 
