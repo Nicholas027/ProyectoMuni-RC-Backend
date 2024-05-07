@@ -279,6 +279,7 @@ export const login = async (req, res) => {
       mensaje: "Los datos son correctos",
       email: profesionalBuscado.email,
       nombre: profesionalBuscado.nombreCompleto,
+      id: profesionalBuscado._id,
       token,
     });
   } catch (error) {

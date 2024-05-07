@@ -95,6 +95,7 @@ export const userSignIn = async (req, res) => {
       message: "El usuario existe",
       email: usuarioBuscado.email,
       nombre: usuarioBuscado.nombre,
+      admin: usuarioBuscado.admin,
       token
     });
   } catch (error) {
