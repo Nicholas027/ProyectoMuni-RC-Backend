@@ -353,3 +353,28 @@ export const uploadProfilePhoto = async (req, res) => {
     res.status(500).json({ error: 'Error al actualizar la foto de perfil' });
   }
 };
+
+export const changePasswordAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { newPassword, confirmPassword } = req.body;
+
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({ error: 'Las contraseñas no coinciden' });
+    }
+
+    const profesional = await Professional.findById(id);
+
+    if (!profesional) {
+      return res.status(404).json({ error: 'Profesional no encontrado' });
+    }
+
+    profesional.password = newPassword;
+    await profesional.save();
+
+    res.status(200).json({ message: 'Contraseña cambiada correctamente', status: 200});
+  } catch (error) {
+    console.error('Error al cambiar la contraseña:', error);
+    res.status(500).json({ error: 'Error al cambiar la contraseña' });
+  }
+};
