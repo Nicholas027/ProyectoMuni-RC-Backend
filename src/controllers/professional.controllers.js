@@ -148,11 +148,7 @@ export const professionalAdminRegister = async (req, res) => {
 
     const newProfessional = new Professional(req.body);
 
-    const hashSalts = process.env.HASH_SALTS;
-    const salt = bcrypt.genSaltSync(parseInt(hashSalts));
-    const hashedPassword = bcrypt.hashSync(password, salt);
-
-    newProfessional.password = hashedPassword;
+    newProfessional.password = password;
     newProfessional.pendiente = false;
 
     const savedProfessional = await newProfessional.save();
